@@ -7,6 +7,8 @@ TOKEN = os.getenv('TOKEN')
 GUILD = os.getenv('GUILD')
 GUESS_LENGTH = 5
 MAX_GUESSES = 5
+ANSWER = 'poppy'
+
 
 class CustomClient(discord.Client):
     def __init__(self) -> None:
@@ -16,7 +18,7 @@ class CustomClient(discord.Client):
             'letters_left': abc,
             'all_letters': abc,
             'active': False,
-            'answer': 'phone',
+            'answer': ANSWER,
             'guess_count': 0,
             'play_again_observer': False
         }
@@ -47,11 +49,9 @@ class CustomClient(discord.Client):
                     await message.channel.send(' '.join(five_green_squares) + '\nYOU WIN!!!!')
                     await self.end_game(message, True)
                 else:
-                    # remove characters in guess from letters left
                     idx = 0
                     for char in list(txt):
                         # return accuracy of guess
-                        print(char, self.game['answer'][idx])
                         if char == self.game['answer'][idx]:
                             self.accuracy_arr.append(':green_square:')
                             self.game['letters_left'] = self.game['letters_left'].replace(char, char.upper())
@@ -90,7 +90,7 @@ class CustomClient(discord.Client):
             **self.game,
             'active': False,
             'letters_left': self.game['all_letters'],
-            'answer': 'phone',
+            'answer': ANSWER,
             'guess_count': 0,
             'play_again_observer': True
         }
